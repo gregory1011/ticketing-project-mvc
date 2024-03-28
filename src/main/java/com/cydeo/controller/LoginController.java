@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
-    @RequestMapping(value = {"/login","/"})
+    @RequestMapping(value = {"/login","/"})  /// these 2 endpoints are same page, login page
     public String login(){
 
         return "login";
