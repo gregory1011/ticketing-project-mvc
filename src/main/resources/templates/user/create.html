@@ -32,7 +32,8 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form action="#" th:object="${users}">
+                                    <form th:action="@{/user/create}" method="post" th:object="${userDTO}">
+
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
@@ -75,8 +76,8 @@
 
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="repassword" class="col-form-label">Confirm Password</label>
-                                                    <input id="repassword" type="password" placeholder="confirm your password" class="form-control" th:field="*{password}">
+                                                    <label for="re_password" class="col-form-label">Confirm Password</label>
+                                                    <input id="re_password" type="password" placeholder="confirm your password" class="form-control" th:field="*{password}">
                                                 </div>
                                             </div>
                                         </div>
@@ -86,10 +87,10 @@
                                                 <div class="form-group">
                                                     <label>Gender</label><br>
                                                     <label class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" th:field="*{gender}" th:value="Male" name="radio-inline" class="custom-control-input"><span class="custom-control-label">Male</span>
+                                                        <input type="radio" th:field="*{gender}" th:value="MALE" name="radio-inline" class="custom-control-input"><span class="custom-control-label">Male</span>
                                                     </label>
                                                     <label class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" th:field="*{gender}" th:value="Female" name="radio-inline" class="custom-control-input"><span class="custom-control-label">Female</span>
+                                                        <input type="radio" th:field="*{gender}" th:value="FEMALE" name="radio-inline" class="custom-control-input"><span class="custom-control-label">Female</span>
                                                     </label>
 
                                                 </div>
@@ -98,9 +99,9 @@
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label>Choose a Role</label>
-                                                    <select name="role" th:field="*{role}" class="custom-select">
-                                                        <option th:value="" th:text="Select"></option>
-                                                        <option th:each="eachRole : ${roles}"></option>
+                                                    <select th:field="*{role}" class="custom-select">
+                                                        <option th:value="''" th:text="Select"></option>
+                                                        <option th:each="eachRole : ${roles}" th:value="${eachRole.id}" th:text="${eachRole.description}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -154,12 +155,12 @@
 
                                             <tbody>
 
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr th:each="eachUser : ${users}" >
+                                                <td th:text="${eachUser.firsName +' '+ eachUser.lastName}"></td>
+                                                <td th:text="${eachUser.username}"></td>
+                                                <td th:text="${eachUser.gender.value}"></td>
+                                                <td th:text="${eachUser.phone}"></td>
+                                                <td th:text="${eachUser.role.description}"></td>
                                                 <td class="actions">
                                                     <a href="#"><button type="button" class="btn btn-warning btn-sm">Update</button></a>
                                                     <a href="#" class="delete-row"><button type="button" class="btn btn-secondary btn-sm">Delete</button></a>
