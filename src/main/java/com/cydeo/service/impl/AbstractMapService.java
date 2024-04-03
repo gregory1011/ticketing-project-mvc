@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractMapService <ID, T>  {
+public abstract class AbstractMapService <T, ID>  {
 
+    // this map serve as Database: map
     protected Map<ID, T> map = new HashMap<>();
 
     T save (ID id, T object){
