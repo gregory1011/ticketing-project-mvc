@@ -30,7 +30,7 @@ public class UserController {
 
         model.addAttribute("userDTO", new UserDTO());  // collect the data from UI into new UserDTO
         model.addAttribute("roles", roleService.findAll()); // bring me all roles from DB
-        model.addAttribute("users", userService.findAll());  // bring all the users from Db
+        model.addAttribute("users", userService.findAll());  // bring all the users from DB
 
         return "user/create";
     }
