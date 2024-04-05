@@ -21,7 +21,7 @@ public class User extends BaseEntity{
     private Gender gender;
 
     // lombok does not crate super all-argument constructor we need to create manualy below
-    // all argument constructor because it extendes to baseentity class
+    // all argument constructor because it extends to base entity class
     public User(Long id, LocalDateTime insertDateTime, Long insertUserId, LocalDateTime lastUpdateDateTime, Long lastUpdateUserId, String firstName, String lastName, String username, String password, boolean enabled, String phone, Role role, Gender gender) {
         super(id, insertDateTime, insertUserId, lastUpdateDateTime, lastUpdateUserId);
         this.firstName = firstName;
