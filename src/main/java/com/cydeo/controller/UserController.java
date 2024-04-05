@@ -5,10 +5,7 @@ import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
@@ -43,6 +40,35 @@ public class UserController {
 
         return "redirect:/user/create"; // redirect to getMapping method
     }
+
+    @GetMapping("/edit/{username}")
+    public String updateUser(@PathVariable("username") String username, Model model){
+        // get the username from the UI with pathVariable
+        // define the attributes
+
+        model.addAttribute("userDTO", userService.findById(username));  // collect the data from UI into new UserDTO
+        model.addAttribute("roles", roleService.findAll()); // bring me all roles from DB
+        model.addAttribute("users", userService.findAll());
+
+        return "/user/update";
+    }
+
+    @PostMapping("/edit")
+    public String updateUser(UserDTO user){
+
+        userService.update(user);
+
+        return "redirect:/user/create";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") String id){
+
+        userService.deleteById(id);
+
+        return "redirect:/user/create";
+    }
+
 
 
 
