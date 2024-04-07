@@ -5,9 +5,7 @@ import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/project")
@@ -28,7 +26,7 @@ public class ProjectController {
 
         model.addAttribute("proJect", new ProjectDTO());
         model.addAttribute("projectS", projectService.findAll());
-        model.addAttribute("managers", userService.findAll());
+        model.addAttribute("managers", userService.findManager());
 
         return "/project/create";
     }
@@ -41,6 +39,42 @@ public class ProjectController {
 
         return "redirect:/project/create";
     }
+
+    @GetMapping("delete/{projectCode}")
+    public String deleteProject(@PathVariable("projectCode") String projectCode){
+
+        projectService.deleteById(projectCode);
+
+        return "redirect:/project/create";
+    }
+
+    @GetMapping("/complete/{projectCode}")
+    public String completeProject(@PathVariable("projectCode") String projectCode){
+
+        projectService.complete(projectService.findById(projectCode));
+        return "redirect:/project/create";
+    }
+
+    @GetMapping("/edit/{projectCode}")
+    public String editProject(@PathVariable("projectCode") String projectCode, Model model){
+
+        model.addAttribute("proJect", projectService.findById(projectCode));
+        model.addAttribute("projectS", projectService.findAll());
+        model.addAttribute("managers", userService.findManager());
+
+        return "/project/update";
+    }
+
+    @PostMapping("/edit")
+    public String postProject(ProjectDTO project){
+
+        // save updated project in projectService -> HashMap
+        projectService.update(project);
+
+        return "redirect:/project/create";
+    }
+
+
 
 
 }
