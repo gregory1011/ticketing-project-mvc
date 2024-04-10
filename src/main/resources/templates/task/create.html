@@ -32,7 +32,7 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:object="${Task}" method="post" th:action="@{/task/create}">
+                                    <form th:action="@{/task/create}" method="post" th:object="${Task}">
 
                                         <div class="row">
                                             <div class="col">
@@ -40,7 +40,7 @@
                                                     <label>Project</label>
                                                     <select th:field="*{project}" name="project" class="custom-select">
                                                         <option th:value="''" th:text="Select"></option>
-                                                        <option th:each="eachProject : ${projects}" th:value="${eachProject.projectCode}" th:text="${eachProject.projectCode}"></option>
+                                                        <option th:each="eachProject : ${projects}" th:value="${eachProject.projectCode}" th:text="${eachProject.projectName}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -127,14 +127,14 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="eachTask : ${taskS}">
-                                                <td th:text="${eachTask.getProject().projectName}"></td>
+                                                <td th:text="${eachTask.project.projectCode+' '+eachTask.project.projectName}"></td>
                                                 <td th:text="${eachTask.taskSubject}"></td>
                                                 <td th:text="${eachTask.assignedEmployee.firsName+' '+eachTask.assignedEmployee.lastName}"></td>
                                                 <td th:text="${#temporals.format(eachTask.assignedDate, 'MM-dd-yyyy')}"></td>
                                                 <td th:text="${eachTask.taskStatus.value}"></td>
-                                                <td class="actions">
-                                                    <a href="#" class="btn btn-warning rounded-0">Update</a>
-                                                    <a href="#" class="btn btn-danger rounded-0">Delete</a>
+                                                <td>
+                                                    <a th:href="@{/task/editTask/{id}(id=${eachTask.getTaskId()})}" class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:href="@{/task/delete/{id}(id=${eachTask.getTaskId()})}" class="btn btn-danger rounded-0">Delete</a>
                                                 </td>
                                             </tr>
                                             </tbody>

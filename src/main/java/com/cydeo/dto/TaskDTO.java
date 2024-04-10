@@ -1,15 +1,14 @@
 package com.cydeo.dto;
 
 import com.cydeo.enums.Status;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class TaskDTO {
 
@@ -20,4 +19,15 @@ public class TaskDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate assignedDate;
     private Status taskStatus;
+
+    // all argument const without Long taskID,  because this field will be created by DB Postgre
+    public TaskDTO(ProjectDTO project, UserDTO assignedEmployee, String taskSubject, String taskDetail, LocalDate assignedDate, Status taskStatus) {
+        this.taskId = UUID.randomUUID().getMostSignificantBits();
+        this.project = project;
+        this.assignedEmployee = assignedEmployee;
+        this.taskSubject = taskSubject;
+        this.taskDetail = taskDetail;
+        this.assignedDate = assignedDate;
+        this.taskStatus = taskStatus;
+    }
 }
