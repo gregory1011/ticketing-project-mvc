@@ -34,5 +34,4 @@ public class RoleServiceImpl extends AbstractMapService <RoleDTO, Long> implemen
        super.update(object.getId(), object);
     }
 
-
 }

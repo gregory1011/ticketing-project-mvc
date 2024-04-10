@@ -2,11 +2,13 @@ package com.cydeo.bootstrap;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.RoleDTO;
+import com.cydeo.dto.TaskDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.enums.Gender;
 import com.cydeo.enums.Status;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.RoleService;
+import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -22,11 +24,13 @@ public class DataGenerator implements CommandLineRunner {
     // dependency injection
     private final UserService userService;
     private final ProjectService projectService;
+    private final TaskService taskService;
 
-    public DataGenerator(RoleService roleService, UserService userService, ProjectService projectService) {
+    public DataGenerator(RoleService roleService, UserService userService, ProjectService projectService, TaskService taskService) {
         this.roleService = roleService;
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @Override
@@ -70,6 +74,13 @@ public class DataGenerator implements CommandLineRunner {
         projectService.save(project2);
         projectService.save(project3);
 
+        TaskDTO task1 = new TaskDTO(10L, project1, user4, "Spring MVC", "Carry on", LocalDate.now(), Status.OPEN);
+        TaskDTO task2 = new TaskDTO(20L, project2, user6, "Spring DB", "Carry on", LocalDate.now(), Status.IN_PROGRESS);
+        TaskDTO task3 = new TaskDTO(30L, project3, user7, "Spring UI", "Carry on", LocalDate.now(), Status.COMPLETED);
+
+        taskService.save(task1);
+        taskService.save(task2);
+        taskService.save(task3);
 
     }
 
