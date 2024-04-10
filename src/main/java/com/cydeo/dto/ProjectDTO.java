@@ -8,9 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class ProjectDTO {
 
     private String projectName, projectCode;
@@ -19,4 +19,17 @@ public class ProjectDTO {
     private LocalDate startDate, endDate;
     private String projectDetail;
     private Status projectStatus;
+    private int completedTaskCounts, unfinishedTaskCounts;
+
+
+    // we use this constructor to avoid object creation in UI - project creation
+    public ProjectDTO(String projectName, String projectCode, UserDTO assignedManager, LocalDate startDate, LocalDate endDate, String projectDetail, Status projectStatus) {
+        this.projectName = projectName;
+        this.projectCode = projectCode;
+        this.assignedManager = assignedManager;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.projectDetail = projectDetail;
+        this.projectStatus = projectStatus;
+    }
 }
