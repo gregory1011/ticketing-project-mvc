@@ -83,6 +83,7 @@ public class TaskServiceIml extends AbstractMapService<TaskDTO, Long> implements
     public void updateStatus(TaskDTO task) {
         findById(task.getTaskId())
                 .setTaskStatus(task.getTaskStatus());
+        update(task);
     }
 
 }
