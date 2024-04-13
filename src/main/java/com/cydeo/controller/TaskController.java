@@ -1,6 +1,5 @@
 package com.cydeo.controller;
 
-import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.enums.Status;
 import com.cydeo.service.ProjectService;
@@ -78,6 +77,7 @@ public class TaskController {
         return "redirect:/task/create";
     }
 
+    // ------------  Employee task pending --------------//
 
     @GetMapping("/employee/pendingTasks")
     public String getPendingTasks(Model model){
@@ -112,9 +112,11 @@ public class TaskController {
         task.setTaskId(id);
         taskService.updateStatus(task);
 
-        return "redirect:/task/employee/pending-tasks";
+        return "redirect:/task/employee/pendingTasks";
     }
 
+
+    // -------------  Employee archive ------------//
     @GetMapping("/employee/archive")
     public String getArchive(Model model){
 
