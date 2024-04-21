@@ -61,9 +61,9 @@ public class TaskController {
     }
 
 //    @PostMapping("/editTask/{id}")
-//    public String updateTask(@PathVariable("id") Long taskId, TaskDTO task){
+//    public String updateTask(@PathVariable("id") Long id, TaskDTO task){
 //
-//        task.setTaskId(taskId);
+//        task.setTaskId(id);
 //        taskService.update(task);
 //
 //        return "redirect:/task/create";
