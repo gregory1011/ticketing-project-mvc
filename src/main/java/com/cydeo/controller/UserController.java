@@ -34,7 +34,7 @@ public class UserController {
 
 
     @PostMapping("/create") // this mapping helps to collect UI input userDTO and post it // use same endpoint as getMapping
-    public String insertUser(@ModelAttribute("userDTO") UserDTO userDTO, Model model){
+    public String insertUser(@ModelAttribute("userDTO") UserDTO userDTO){
 
         userService.save(userDTO); // save the user into DB
 
