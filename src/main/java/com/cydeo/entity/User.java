@@ -2,13 +2,18 @@ package com.cydeo.entity;
 
 import com.cydeo.enums.Gender;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
+import javax.persistence.*;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "users")
 public class User extends BaseEntity{
 
     private String firstName;
@@ -17,20 +22,11 @@ public class User extends BaseEntity{
     private String password;
     private boolean enabled;
     private String phone;
-    private Role role;
-    private Gender gender;
 
-    // lombok does not crate super all-argument constructor we need to create manualy below
-    // all argument constructor because it extends to base entity class
-    public User(Long id, LocalDateTime insertDateTime, Long insertUserId, LocalDateTime lastUpdateDateTime, Long lastUpdateUserId, String firstName, String lastName, String username, String password, boolean enabled, String phone, Role role, Gender gender) {
-        super(id, insertDateTime, insertUserId, lastUpdateDateTime, lastUpdateUserId);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.phone = phone;
-        this.role = role;
-        this.gender = gender;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 }
