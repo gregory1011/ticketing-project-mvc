@@ -1,37 +1,34 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.RoleDTO;
+import com.cydeo.entity.Role;
+import com.cydeo.mapper.RoleMapper;
+import com.cydeo.repository.RoleRepo;
 import com.cydeo.service.RoleService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service // instead of @Component
-public class RoleServiceImpl extends AbstractMapService <RoleDTO, Long> implements RoleService {
+@AllArgsConstructor
+public class RoleServiceImpl implements RoleService {
+
+    private final RoleRepo roleRepo;
+    private final RoleMapper roleMapper;
 
     @Override
-    public RoleDTO save(RoleDTO object) {
-        return super.save(object.getId(), object);
-    }
+    public List<RoleDTO> listAllRoles() {
 
-    @Override
-    public List<RoleDTO> findAll() {
-        return super.findAll();
+        List<Role> roleList = roleRepo.findAll();
+
+        return roleList.stream().map(roleMapper::convertToDTO).collect(Collectors.toList());
+
     }
 
     @Override
     public RoleDTO findById(Long id) {
-        return super.findById(id);
+        return null;
     }
-
-    @Override
-    public void deleteById(Long id) {
-        super.deleteById(id);
-    }
-
-    @Override
-    public void update(RoleDTO object) {
-       super.update(object.getId(), object);
-    }
-
 }

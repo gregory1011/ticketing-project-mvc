@@ -1,53 +1,71 @@
 package com.cydeo.service.impl;
 
-import com.cydeo.bootstrap.DataGenerator;
+
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.User;
+import com.cydeo.mapper.UserMapper;
+import com.cydeo.repository.UserRepo;
 import com.cydeo.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl extends AbstractMapService<UserDTO, String> implements UserService {
+@AllArgsConstructor
+public class UserServiceImpl implements UserService {
+
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
 
     @Override
-    public UserDTO save(UserDTO object) {
-        return super.save(object.getUsername(), object);
+    public List<UserDTO> listAllUsers() {
+
+        List<User> userList = userRepo.findAll();
+
+        return userList.stream().map(userMapper::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<UserDTO> findAll() {
-        return super.findAll();
+    public UserDTO findByUsername(String username) {
+
+        User repoUser = userRepo.findByUsername(username);
+
+        return userMapper.convertToDTO(repoUser);
     }
 
     @Override
-    public UserDTO findById(String  id) {
-        return super.findById(id);
+    public void save(UserDTO userDTO) {
+        User entity = userMapper.convertToEntity(userDTO);
+        userRepo.save(entity);
     }
 
     @Override
-    public void deleteById(String id) {
-        super.deleteById(id);
+    public UserDTO update(UserDTO userDTO) {
+
+        // we need to capture current username
+        User user = userRepo.findByUsername(userDTO.getUsername());
+
+        //convert user to dto
+        User convertedUser = userMapper.convertToEntity(userDTO);
+
+        // set ID to converted object
+        convertedUser.setId(user.getId());
+
+        // save updated user
+        userRepo.save(convertedUser);
+
+        return findByUsername(userDTO.getUsername());
     }
 
     @Override
-    public void update(UserDTO object) {
-        super.update(object.getUsername(), object);
+    public void deleteByUsername(String username) {
+        userRepo.deleteByUsername(username);
     }
 
     @Override
-    public List<UserDTO> findManager() {
-        return super.findAll().stream()
-                .filter(p -> p.getRole().getId() == 2)
-                .collect(Collectors.toList());
-    }
+    public void delete(String username) {
 
-    @Override
-    public List<UserDTO> findEmployee() {
-        return super.findAll().stream()
-                .filter(p -> p.getRole().getId() == 3)
-                .collect(Collectors.toList());
     }
-
 }
