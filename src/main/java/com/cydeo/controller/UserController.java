@@ -38,11 +38,12 @@ public class UserController {
     public String insertUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model){
 
         // validation
-        if (bindingResult.hasErrors()){
-            model.addAttribute("roles", roleService.listAllRoles());
-            model.addAttribute("users", userService.listAllUsers());
-            return "user/create";
-        }
+//        if (bindingResult.hasErrors()){
+//
+//            model.addAttribute("roles", roleService.listAllRoles());
+//            model.addAttribute("users", userService.listAllUsers());
+//            return "user/create";
+//        }
 
         userService.save(userDTO); // save the user into DB
 
@@ -54,7 +55,7 @@ public class UserController {
         // get the username from the UI with pathVariable
         // define the attributes
 
-        model.addAttribute("userDTO", userService.findByUsername(username));  // collect the data from UI into new UserDTO
+        model.addAttribute("userDTO", userService.findByUserName(username));  // collect the data from UI into new UserDTO
         model.addAttribute("roles", roleService.listAllRoles()); // bring me all roles from DB
         model.addAttribute("users", userService.listAllUsers());
 
@@ -62,7 +63,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(UserDTO user){
+    public String updateUser(@ModelAttribute("user") UserDTO user){
 
         userService.update(user);
 
@@ -72,7 +73,7 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") String username){
 
-        userService.deleteByUsername(username);
+        userService.delete(username);
 
         return "redirect:/user/create";
     }

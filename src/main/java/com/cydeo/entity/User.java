@@ -1,10 +1,10 @@
 package com.cydeo.entity;
 
 import com.cydeo.enums.Gender;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -14,11 +14,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@Where(clause = "is_deleted=false") // this query will be concatenated everytime we call a query from userRepo
+// example: Select * from USERS where is_deleted = false; // findAll();
 public class User extends BaseEntity{
 
     private String firstName;
     private String lastName;
-    private String username;
+    private String userName;
     private String password;
     private boolean enabled;
     private String phone;
