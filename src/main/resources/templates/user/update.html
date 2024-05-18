@@ -32,13 +32,18 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:action="@{/user/edit}" method="post" th:object="${userDTO}">
+                                    <form th:action="@{/user/create}" method="post" th:object="${userDTO}">
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label for="firstname" class="col-form-label">First Name</label>
-                                                    <input id="firstname" type="text" placeholder="first name" class="form-control" th:field="*{firsName}">
+                                                    <input th:field="*{firstName}" id="firstname" type="text" placeholder="first name" class="form-control">
+                                                    <div th:if="${#fields.hasErrors('firstName')}">
+                                                        <ol class="alert alert-warning">
+                                                            <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
+                                                        </ol>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -46,6 +51,11 @@
                                                 <div class="form-group">
                                                     <label for="lastname" class="col-form-label">Last Name</label>
                                                     <input id="lastname" type="text" placeholder="last name" class="form-control" th:field="*{lastName}">
+                                                    <div th:if="${#fields.hasErrors('lastName')}">
+                                                        <ol class="alert alert-warning">
+                                                            <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
+                                                        </ol>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +64,12 @@
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label for="email_address" class="col-form-label">Email Address</label>
-                                                    <input id="email_address" type="text" placeholder="email address" class="form-control" th:field="*{username}">
+                                                    <input id="email_address" type="text" placeholder="email address" class="form-control" th:field="*{userName}">
+                                                    <div th:if="${#fields.hasErrors('userName')}">
+                                                        <ol class="alert alert-warning">
+                                                            <li th:each="err : ${#fields.errors('userName')}" th:text="${err}"></li>
+                                                        </ol>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -62,6 +77,11 @@
                                                 <div class="form-group">
                                                     <label for="phone_number" class="col-form-label">Phone Number</label>
                                                     <input id="phone_number" type="tel" placeholder="phone number" class="form-control" th:field="*{phone}">
+                                                    <div th:if="${#fields.hasErrors('phone')}">
+                                                        <ol class="alert alert-warning">
+                                                            <li th:each="err : ${#fields.errors('phone')}" th:text="${err}"></li>
+                                                        </ol>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -70,14 +90,24 @@
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label for="password" class="col-form-label">Password</label>
-                                                    <input id="password" type="password" placeholder="password" class="form-control" th:field="*{password}">
+                                                    <input id="password" type="password" placeholder="passWord" class="form-control" th:field="*{passWord}">
+                                                    <div th:if="${#fields.hasErrors('passWord')}">
+                                                        <ol class="alert alert-warning">
+                                                            <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+                                                        </ol>
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label for="re_password" class="col-form-label">Confirm Password</label>
-                                                    <input id="re_password" type="password" placeholder="confirm your password" class="form-control" th:field="*{password}">
+                                                    <input id="re_password" type="password" placeholder="confirm your password" class="form-control" th:field="*{confirmPassword}">
+                                                    <div th:if="${#fields.hasErrors('confirmPassword')}">
+                                                        <ol class="alert alert-warning">
+                                                            <li th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></li>
+                                                        </ol>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,9 +130,13 @@
                                                 <div class="form-group">
                                                     <label>Choose a Role</label>
                                                     <select th:field="*{role}" class="custom-select">
-
                                                         <option th:each="eachRole : ${roles}" th:value="${eachRole.id}" th:text="${eachRole.description}"></option>
                                                     </select>
+                                                    <!--                                                    <div th:if="${#fields.hasErrors('role')}">-->
+                                                    <!--                                                        <ol class="alert alert-warning">-->
+                                                    <!--                                                            <li th:each="err : ${#fields.errors('role')}" th:text="${err}"></li>-->
+                                                    <!--                                                        </ol>-->
+                                                    <!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -156,14 +190,14 @@
                                             <tbody>
 
                                             <tr th:each="eachUser : ${users}" >
-                                                <td th:text="${eachUser.firsName +' '+ eachUser.lastName}"></td>
-                                                <td th:text="${eachUser.username}"></td>
+                                                <td th:text="${eachUser.firstName +' '+ eachUser.lastName}"></td>
+                                                <td th:text="${eachUser.userName}"></td>
                                                 <td th:text="${eachUser.gender.value}"></td>
                                                 <td th:text="${eachUser.phone}"></td>
                                                 <td th:text="${eachUser.role.description}"></td>
                                                 <td class="actions">
-                                                    <a th:href="@{/user/edit/{id}(id=${eachUser.username})}"><button type="button" class="btn btn-warning btn-sm">Update</button></a>
-                                                    <a th:href="@{/user/delete/{id}(id=${eachUser.username})}" class="delete-row"><button type="button" class="btn btn-secondary btn-sm">Delete</button></a>
+                                                    <a th:href="@{/user/edit/{id}(id=${eachUser.userName})}"><button type="button" class="btn btn-warning btn-sm">Update</button></a>
+                                                    <a th:href="@{/user/delete/{id}(id=${eachUser.userName})}" class="delete-row"><button type="button" class="btn btn-secondary btn-sm">Delete</button></a>
                                                 </td>
                                             </tr>
 
