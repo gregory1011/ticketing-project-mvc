@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("/create") // this mapping helps to collect UI input userDTO and post it // use same endpoint as getMapping
     public String insertUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model){
 
-        // validation
+//         validation
 //        if (bindingResult.hasErrors()){
 //
 //            model.addAttribute("roles", roleService.listAllRoles());
@@ -55,7 +55,7 @@ public class UserController {
         // get the username from the UI with pathVariable
         // define the attributes
 
-        model.addAttribute("userDTO", userService.findByUserName(username));  // collect the data from UI into new UserDTO
+        model.addAttribute("userDTO", userService.findUserByUserName(username));  // collect the data from UI into new UserDTO
         model.addAttribute("roles", roleService.listAllRoles()); // bring me all roles from DB
         model.addAttribute("users", userService.listAllUsers());
 
