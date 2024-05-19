@@ -31,4 +31,17 @@ public class User extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", enabled=" + enabled +
+                ", phone='" + phone + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }
