@@ -2,8 +2,10 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.repository.UserRepo;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,24 +14,21 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/project")
+@AllArgsConstructor
 public class ProjectController {
 
     // inject dependency
     private final ProjectService projectService;
     private final UserService userService;
+    private final UserRepo userRepo;
 
-    // inject through constructor (or field, or setter ...)
-    public ProjectController(ProjectService projectService, UserService userService) {
-        this.projectService = projectService;
-        this.userService = userService;
-    }
 
     @GetMapping("/create")
     public String projectCreate(ProjectDTO projectDTO, Model model){
 
         model.addAttribute("proJect", new ProjectDTO());
-        model.addAttribute("projectS", projectService.findAll());
-        model.addAttribute("managers", userService.findManager());
+        model.addAttribute("projectS", projectService.listAllProjects());
+        model.addAttribute("managers", userService.listAllUsersByRole("Manager"));
 
         return "/project/create";
     }
@@ -46,7 +45,7 @@ public class ProjectController {
     @GetMapping("delete/{projectCode}")
     public String deleteProject(@PathVariable("projectCode") String projectCode){
 
-        projectService.deleteById(projectCode);
+        projectService.delete(projectCode);
 
         return "redirect:/project/create";
     }
@@ -54,16 +53,17 @@ public class ProjectController {
     @GetMapping("/complete/{projectCode}")
     public String completeProject(@PathVariable("projectCode") String projectCode){
 
-        projectService.complete(projectService.findById(projectCode));
+        projectService.complete(projectCode);
+
         return "redirect:/project/create";
     }
 
     @GetMapping("/edit/{projectCode}")
     public String editProject(@PathVariable("projectCode") String projectCode, Model model){
 
-        model.addAttribute("proJect", projectService.findById(projectCode));
-        model.addAttribute("projectS", projectService.findAll());
-        model.addAttribute("managers", userService.findManager());
+        model.addAttribute("proJect", projectService.findByProjectCode(projectCode));
+        model.addAttribute("projectS", projectService.listAllProjects());
+        model.addAttribute("managers", userService.listAllUsersByRole("manager"));
 
         return "/project/update";
     }
@@ -71,32 +71,31 @@ public class ProjectController {
     @PostMapping("/edit")
     public String postProject(ProjectDTO project){
 
-        // save updated project in projectService -> HashMap
         projectService.update(project);
 
         return "redirect:/project/create";
     }
 
-    @GetMapping("/manager/project-status")
-    public String getProjectByManager(Model model){
-
-        UserDTO manager = userService.findById("john@cydeo.com");
-
-        List<ProjectDTO> projects = projectService.getCountedListOfProjectDTO(manager);
-
-        model.addAttribute("projects", projects);
-
-        return "/manager/project-status";
-    }
-
-
-    @GetMapping("/manager/complete/{projectCode}")
-    public String managerCompleteProject(@PathVariable("projectCode") String projectCode){
-
-        projectService.complete(projectService.findById(projectCode));
-
-        return "redirect:/project/manager/project-status";
-    }
+//    @GetMapping("/manager/project-status")
+//    public String getProjectByManager(Model model){
+//
+//        UserDTO manager = userService.findById("john@cydeo.com");
+//
+//        List<ProjectDTO> projects = projectService.getCountedListOfProjectDTO(manager);
+//
+//        model.addAttribute("projects", projects);
+//
+//        return "/manager/project-status";
+//    }
+//
+//
+//    @GetMapping("/manager/complete/{projectCode}")
+//    public String managerCompleteProject(@PathVariable("projectCode") String projectCode){
+//
+//        projectService.complete(projectService.findById(projectCode));
+//
+//        return "redirect:/project/manager/project-status";
+//    }
 
 
 }
