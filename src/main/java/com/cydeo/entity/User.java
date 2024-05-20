@@ -1,6 +1,7 @@
 package com.cydeo.entity;
 
 import com.cydeo.enums.Gender;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,8 +10,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
@@ -20,6 +20,8 @@ public class User extends BaseEntity{
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true, nullable = false)
     private String userName;
     private String passWord;
     private boolean enabled;
@@ -32,16 +34,16 @@ public class User extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
-                ", enabled=" + enabled +
-                ", phone='" + phone + '\'' +
-                ", gender=" + gender +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", userName='" + userName + '\'' +
+//                ", passWord='" + passWord + '\'' +
+//                ", enabled=" + enabled +
+//                ", phone='" + phone + '\'' +
+//                ", gender=" + gender +
+//                '}';
+//    }
 }
