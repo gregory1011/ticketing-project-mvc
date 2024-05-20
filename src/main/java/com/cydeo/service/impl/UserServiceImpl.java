@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO userDTO) {
 
-        User user = userMapper.convertToEntity(userDTO);
-        userRepo.save(user);
-       // userRepo.save(userMapper.convertToEntity(userDTO));
+//        User user = userMapper.convertToEntity(userDTO);
+//        userRepo.save(user);
+        userRepo.save(userMapper.convertToEntity(userDTO));
     }
 
     @Override
@@ -57,9 +57,8 @@ public class UserServiceImpl implements UserService {
 
          // save updated user
         userRepo.save(convertedUser);
-        User user1 = userRepo.findById(user.getId()).get();
 
-        return userMapper.convertToDTO(user1);
+        return findUserByUserName(dto.getUserName());
     }
 
     @Override
@@ -85,14 +84,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> listAllManagers() {
+    public List<UserDTO> listAllUsersByRole(String role) {
 
-        List<User> managerList = userRepo.findAll().stream()
-                .filter(managers -> managers.getRole().getDescription().equals("Manager")).collect(Collectors.toList());
+//        List<User> userList = userRepo.findAllByRoleDescriptionIgnoreCase(role);
+//        return userList.stream().map(userMapper::convertToDTO).collect(Collectors.toList());
 
-        List<UserDTO> managers = managerList.stream().map(userMapper::convertToDTO).collect(Collectors.toList());
-
-        return managers;
+        return userRepo.findAll().stream().filter(m -> m.getRole().getDescription().equalsIgnoreCase(role))
+                .map(userMapper::convertToDTO).collect(Collectors.toList());
     }
 
 
