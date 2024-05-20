@@ -12,10 +12,9 @@ public interface ProjectService {
 
     void save(ProjectDTO project);
 
-    void deleteByProjectCode(String projectCode);
     void delete(String sourceCode);
 
-    void complete(ProjectDTO projectDto);
+    void complete(String projectCode);
 
     void update(ProjectDTO project);
 
