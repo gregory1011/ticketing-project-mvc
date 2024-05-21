@@ -1,5 +1,6 @@
 package com.cydeo.dto;
 
+import com.cydeo.entity.BaseEntity;
 import com.cydeo.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
