@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Data
 public class UserDTO {
 
     @NotBlank
