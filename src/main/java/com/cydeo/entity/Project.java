@@ -19,14 +19,14 @@ public class Project extends BaseEntity{
 
     private String projectName;
 
-    @Column(unique = true)  // this is the validation for unique project code. NO double
+    @Column(unique = true, nullable = false)  // this is the validation for unique project code. NO double
     private String projectCode;
 
     private LocalDate startDate;
     private LocalDate endDate;
     private String projectDetail;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
     private User assignedManager;
 
