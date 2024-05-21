@@ -1,9 +1,12 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.Project;
+import com.cydeo.entity.User;
 import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
+import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.ProjectRepo;
 import com.cydeo.repository.UserRepo;
 import com.cydeo.service.ProjectService;
@@ -21,6 +24,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepo projectRepo;
     private final ProjectMapper projectMapper;
     private final UserRepo userRepo;
+    private final UserMapper userMapper;
 
     @Override
     public List<ProjectDTO> listAllProjects() {
@@ -52,7 +56,6 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project project = projectRepo.findByProjectCode(projectCode);
         project.setIsDeleted(true);
-
         projectRepo.save(project);
     }
 
