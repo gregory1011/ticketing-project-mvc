@@ -1,6 +1,5 @@
 package com.cydeo.dto;
 
-import com.cydeo.entity.BaseEntity;
 import com.cydeo.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 public class ProjectDTO {
+
+    private Long id; // this id is to keep track of id and initialize it when mapping from Entity to DTO
 
     private String projectName, projectCode;
     private UserDTO assignedManager;

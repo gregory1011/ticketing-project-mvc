@@ -12,6 +12,8 @@ import javax.validation.constraints.*;
 @Data
 public class UserDTO {
 
+    private Long id;
+
     @NotBlank
     @Size(min = 2, max = 15)
     private String firstName;
