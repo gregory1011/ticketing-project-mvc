@@ -8,8 +8,9 @@ import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.ProjectRepo;
-import com.cydeo.repository.UserRepo;
 import com.cydeo.service.ProjectService;
+import com.cydeo.service.TaskService;
+import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepo projectRepo;
     private final ProjectMapper projectMapper;
-    private final UserRepo userRepo;
+    private final UserService userService;
     private final UserMapper userMapper;
+    private final TaskService taskService;
 
     @Override
     public List<ProjectDTO> listAllProjects() {
@@ -56,7 +58,15 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project project = projectRepo.findByProjectCode(projectCode);
         project.setIsDeleted(true);
+        // the projectCode is already in DB
+        // we set project code concat + id, this way it will be different code - unique in DB.
+        // se when we crate a new
+        project.setProjectCode(project.getProjectCode()+"-"+ project.getId());
         projectRepo.save(project);
+
+        // we want to make delete all tasks associated with this project
+        ProjectDTO projectDTO = projectMapper.convertToDTO(project);
+        taskService.deleteByProject(projectDTO);
     }
 
 
@@ -64,9 +74,13 @@ public class ProjectServiceImpl implements ProjectService {
     public void complete(String projectCode) {
 
         Project project = projectRepo.findByProjectCode(projectCode);
-        project.setProjectStatus(Status.COMPLETED);
+        project.setProjectStatus(Status.COMPLETE);
 
         projectRepo.save(project);
+
+        // same logic like in delete method
+        ProjectDTO dto = projectMapper.convertToDTO(project);
+        taskService.completeByProject(dto);
     }
 
     @Override
@@ -79,6 +93,39 @@ public class ProjectServiceImpl implements ProjectService {
         convertedProject.setProjectStatus(dbProject.getProjectStatus());
 
         projectRepo.save(convertedProject);
+    }
+
+    @Override
+    public List<ProjectDTO> listAllProjectDetails() {
+
+        UserDTO currentUserDto = userService.findUserByUserName("harold@manager.com");
+        User user = userMapper.convertToEntity(currentUserDto);
+
+        List<Project> list = projectRepo.findAllByAssignedManager(user);
+
+
+
+        // get the list and stream it the use map to work through
+        return list.stream().map(project -> {
+
+            ProjectDTO dto = projectMapper.convertToDTO(project);
+
+            // setting up unfinished tasks
+            dto.setUnfinishedTaskCounts(taskService.totalNonCompletedTasks(project.getProjectCode()));
+
+            // setting up completed tasks
+            dto.setCompletedTaskCounts(taskService.totalCompletedTasks(project.getProjectCode()));
+            return dto;
+
+        }).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ProjectDTO> readAllByAssignedManager(User assignedManager) {
+
+        List<Project> list = projectRepo.findAllByAssignedManager(assignedManager);
+        return list.stream().map(projectMapper::convertToDTO).collect(Collectors.toList());
     }
 
 }

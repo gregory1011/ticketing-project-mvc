@@ -134,10 +134,31 @@
                                                 <td th:text="${eachProject.assignedManager.firstName + ' '+eachProject.assignedManager.lastName}"></td>
                                                 <td th:text="${eachProject.projectStatus}"></td>
                                                 <td>
-                                                    <a th:href="@{/project/edit/{id}(id=${eachProject.projectCode})}"><button type="button" class="btn btn-warning rounded-0">Update</button></a>
+
+                                                    <!-- <a th:href="@{/project/edit/{id}(id=${eachProject.projectCode})}"><button type="button" class="btn btn-warning rounded-0">Update</button></a>-->
+                                                    <!--EnableButton if the project can be updated-->
+                                                    <a th:if="${ eachProject.projectStatus.value != 'Completed' }"
+                                                       class="btn btn-warning rounded-0"
+                                                       th:href="@{/project/edit/{id}(id=${eachProject.projectCode})}">Update</a>
+                                                    <!--DisableButton if the project is updated-->
+                                                    <a th:if="${ eachProject.projectStatus.value == 'Completed' }"
+                                                       class="btn btn-warning rounded-0 disabled-button">Update</a>
+
+                                                    <!-- delete button-->
                                                     <a th:href="@{/project/delete/{id}(id=${eachProject.projectCode})}"><button type="button" class="btn btn-danger rounded-0">Delete</button></a>
-                                                    <a th:href="@{/project/complete/{id}(id=${eachProject.projectCode})} "><button type="button" class="btn btn-info rounded-0">Complete</button></a>
-<!--                                                    th:disabled="${eachProject.projectStatus.value.equals('Completed')}"-->
+
+                                                    <!-- <a th:href="@{/project/complete/{id}(id=${eachProject.projectCode})} "><button type="button" class="btn btn-info rounded-0">Complete</button></a>&ndash;&gt;-->
+                                                    <!--if there is unfinished task then Complete button to be disabled, if there is no unfinished task then complete button enable -->
+
+                                                    <!--EnableButton if the project can be completed-->
+                                                    <a th:if="${eachProject.unfinishedTaskCounts == 0 && eachProject.projectStatus.value != 'Completed'}"
+                                                       class="btn btn-info rounded-0"
+                                                       th:href="@{/project/complete/{id}(id=${eachProject.getProjectCode()})}">Complete</a>
+                                                    <!--DisableButton if the project is completed-->
+                                                    <a th:if="${eachProject.unfinishedTaskCounts > 0 || eachProject.projectStatus.value == 'Completed'}"
+                                                       class="btn btn-info rounded-0 disabled-button">Complete</a>
+
+
                                                 </td>
                                             </tr>
                                             </tbody>
