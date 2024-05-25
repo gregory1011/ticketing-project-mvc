@@ -26,7 +26,7 @@ public class TaskController {
 
         model.addAttribute("Task", new TaskDTO());
         model.addAttribute("projects", projectService.listAllProjects());
-        model.addAttribute("employees", userService.listAllUsers());
+        model.addAttribute("employees", userService.listAllUsersByRole("employee"));
         model.addAttribute("taskS", taskService.listAllTaskDTO());
 
         return "/task/create";
@@ -52,7 +52,7 @@ public class TaskController {
 
         model.addAttribute("Task", taskService.findById(taskId));
         model.addAttribute("projects", projectService.listAllProjects());
-        model.addAttribute("employees", userService.listAllUsers());
+        model.addAttribute("employees", userService.listAllUsersByRole("employee"));
         model.addAttribute("taskS", taskService.listAllTaskDTO());
 
         return "/task/update";
@@ -66,7 +66,7 @@ public class TaskController {
 
         return "redirect:/task/create";
     }
-//
+
 //    @PostMapping("/editTask/{taskId}") // this variable taskId is from TaskDTO and sets it auto.
 //    public String updateTask(TaskDTO task){ // task variable acts like a depend injection and sets taskId
 //        // task.taskId = taskId;
@@ -74,56 +74,56 @@ public class TaskController {
 //
 //        return "redirect:/task/create";
 //    }
-//
+
 //    // ------------  Employee task pending --------------//
-//
-//    @GetMapping("/employee/pendingTasks")
-//    public String getPendingTasks(Model model){
-//
-//        model.addAttribute("tasks", taskService.findTaskByStatusIsNot(Status.COMPLETED));
-//
-//        return "/task/pending-tasks";
-//    }
-//
-//    @GetMapping("/employee/edit/{id}")
-//    public String employeeEditTask(@PathVariable("id") Long id, Model model){
-//
-//        model.addAttribute("task", taskService.findById(id));
+
+    @GetMapping("/employee/pendingTasks")
+    public String getPendingTasks(Model model){
+
+        model.addAttribute("tasks", taskService.listAllTaskByStatusIsNot(Status.COMPLETE));
+
+        return "/task/pending-tasks";
+    }
+
+    @GetMapping("/employee/edit/{id}")
+    public String employeeEditTask(@PathVariable("id") Long id, Model model){
+
+        model.addAttribute("task", taskService.findById(id));
 //        model.addAttribute("employees", userService.findEmployee());
-//        model.addAttribute("projects", projectService.findAllNonCompletedProjects());
-//        model.addAttribute("tasks", taskService.findTaskByStatusIsNot(Status.COMPLETED));
-//        model.addAttribute("statuses", Status.values());
+//        model.addAttribute("projects", projectService.listAllAllNonCompletedProjects());
+        model.addAttribute("tasks", taskService.listAllTaskByStatusIsNot(Status.COMPLETE));
+        model.addAttribute("statuses", Status.values());
+
+        return "/task/status-update";
+    }
+
+//    @PostMapping("/employee/update/{taskId}")
+//    public String employeeUpdateTask(TaskDTO taskDTO){
 //
-//        return "/task/status-update";
+//        taskService.updateStatus(taskDTO);
+//        return "redirect:/task/employee/pending-task";
 //    }
-//
-////    @PostMapping("/employee/update/{taskId}")
-////    public String employeeUpdateTask(TaskDTO taskDTO){
-////
-////        taskService.updateStatus(taskDTO);
-////        return "redirect:/task/employee/pending-task";
-////    }
-//
-//    @PostMapping("/employee/update/{id}")
-//    public String empUpdateTask(@PathVariable("id") Long id, TaskDTO task){
-//
-//        task.setTaskId(id);
-//        taskService.updateStatus(task);
-//
-//        return "redirect:/task/employee/pendingTasks";
-//    }
-//
-//
-//    // -------------  Employee archive ------------//
-//
-//
-//    @GetMapping("/employee/archive")
-//    public String getArchive(Model model){
-//
-//        model.addAttribute("task", taskService.findTaskByStatus(Status.COMPLETED));
-//
-//        return "/task/archive";
-//    }
+
+    @PostMapping("/employee/update/{id}")
+    public String empUpdateTask(@PathVariable("id") Long id, TaskDTO task){
+
+       // task.setTaskId(id);
+        taskService.updateStatus(task);
+
+        return "redirect:/task/employee/pendingTasks";
+    }
+
+
+    // -------------  Employee archive ------------//
+
+
+    @GetMapping("/employee/archive")
+    public String getArchive(Model model){
+
+        model.addAttribute("task", taskService.listAllTaskByStatus(Status.COMPLETE));
+
+        return "/task/archive";
+    }
 
 
 
