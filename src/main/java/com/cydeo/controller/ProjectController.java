@@ -1,11 +1,6 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
-import com.cydeo.dto.UserDTO;
-import com.cydeo.entity.Project;
-import com.cydeo.mapper.ProjectMapper;
-import com.cydeo.repository.ProjectRepo;
-import com.cydeo.repository.UserRepo;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -24,9 +19,6 @@ public class ProjectController {
     // inject dependency
     private final ProjectService projectService;
     private final UserService userService;
-    private final UserRepo userRepo;
-    private final ProjectRepo projectRepo;
-    private final ProjectMapper projectMapper;
 
 
     @GetMapping("/create")
