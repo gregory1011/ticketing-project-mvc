@@ -44,11 +44,11 @@
                                             <tr th:each="eachTask : ${tasks}">
                                                 <td th:text="${eachTask.project.projectCode + ' '+eachTask.project.projectName}"></td>
                                                 <td th:text="${eachTask.taskSubject}"></td>
-                                                <td th:text="${eachTask.assignedEmployee.firsName+ ' ' +eachTask.assignedEmployee.lastName}"></td>
+                                                <td th:text="${eachTask.assignedEmployee.firstName+ ' ' +eachTask.assignedEmployee.lastName}"></td>
                                                 <td th:text="${#temporals.format(eachTask.assignedDate, 'MM-dd-yyyy')}"></td>
                                                 <td th:text="${eachTask.taskStatus.value}"></td>
                                                 <td>
-                                                    <a th:href="@{/task/employee/edit/{id}(id=${eachTask.taskId})}" class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:href="@{/task/employee/edit/{id}(id=${eachTask.id})}" class="btn btn-warning rounded-0">Update</a>
                                                 </td>
                                             </tr>
                                             </tbody>
