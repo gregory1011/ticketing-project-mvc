@@ -133,7 +133,18 @@
                                                 <td th:text="${#temporals.format(eachTask.assignedDate, 'MM-dd-yyyy')}"></td>
                                                 <td th:text="${eachTask.taskStatus.value}"></td>
                                                 <td>
-                                                    <a th:href="@{/task/editTask/{id}(id=${eachTask.id})}" class="btn btn-warning rounded-0">Update</a>
+
+<!--                                                    <a th:href="@{/task/editTask/{id}(id=${eachTask.id})}" class="btn btn-warning rounded-0">Update</a>-->
+
+                                                    <!--EnableButton if the project can be updated-->
+                                                    <a th:if="${eachTask.taskStatus.value != 'Completed'}"
+                                                       class="btn btn-warning rounded-0"
+                                                       th:href="@{/task/editTask/{id}(id=${eachTask.id})}">Update</a>
+                                                    <!--DisableButton if the project is updated-->
+                                                    <a th:if="${eachTask.taskStatus.value == 'Completed'}"
+                                                       class="btn btn-warning rounded-0 disabled-button">Update</a>
+
+
                                                     <a th:href="@{/task/delete/{id}(id=${eachTask.id})}" class="btn btn-danger rounded-0">Delete</a>
                                                 </td>
                                             </tr>
