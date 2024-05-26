@@ -20,26 +20,19 @@ import java.time.LocalDate;
 public class Task extends BaseEntity{
 
     private String taskSubject;
+    private String taskDetail;
 
     @Column(columnDefinition = "DATE")
     private LocalDate assignedDate;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status taskStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User assignedEmployee;
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "taskSubject='" + taskSubject + '\'' +
-                ", assignedDate=" + assignedDate +
-                ", status=" + status +
-                '}';
-    }
 
 }
