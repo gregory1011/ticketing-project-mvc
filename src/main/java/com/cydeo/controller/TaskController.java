@@ -77,7 +77,7 @@ public class TaskController {
 
 //    // ------------  Employee task pending --------------//
 
-    @GetMapping("/employee/pendingTasks")
+    @GetMapping("/employee/pending-tasks")
     public String getPendingTasks(Model model){
 
         model.addAttribute("tasks", taskService.listAllTaskByStatusIsNot(Status.COMPLETE));
