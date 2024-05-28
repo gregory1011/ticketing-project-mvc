@@ -17,7 +17,7 @@ import javax.validation.Valid;
 public class UserController {
 
 
-    // 2 dependency injection, using interface inject for loosing couple
+    // 2 dependency injection, using @AllArgConst inject for loosing couple
     private final RoleService roleService;
     private final UserService userService;
 
