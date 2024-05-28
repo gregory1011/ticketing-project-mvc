@@ -12,6 +12,7 @@ import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,14 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final ProjectService projectService;
     private final TaskService taskService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepo userRepo, UserMapper userMapper, @Lazy ProjectService projectService, TaskService taskService) {
+    public UserServiceImpl(UserRepo userRepo, UserMapper userMapper, @Lazy ProjectService projectService, TaskService taskService, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.userMapper = userMapper;
         this.projectService = projectService;
         this.taskService = taskService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -52,9 +55,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO userDTO) {
 
-//        User user = userMapper.convertToEntity(userDTO);
-//        userRepo.save(user);
-        userRepo.save(userMapper.convertToEntity(userDTO));
+        userDTO.setEnabled(true);
+
+        User user = userMapper.convertToEntity(userDTO);
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+
+        userRepo.save(user);
     }
 
     @Override
