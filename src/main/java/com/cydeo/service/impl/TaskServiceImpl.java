@@ -12,6 +12,7 @@ import com.cydeo.repository.UserRepo;
 import com.cydeo.service.TaskService;
 import lombok.AllArgsConstructor;
 import com.cydeo.entity.Task;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -132,7 +133,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> listAllTaskByStatusIsNot(Status status) {
 
-        User loggedInUser = userRepo.findByUserName("john@employee.com");
+        // whoever user is logged in the system - SecurityContextHolder will bring the name
+        String usernameAuthenticated = SecurityContextHolder.getContext().getAuthentication().getName();
+
+//        User loggedInUser = userRepo.findByUserName("john@employee.com");
+        User loggedInUser = userRepo.findByUserName(usernameAuthenticated);
+
+
         List<Task> list = taskRepo.findAllByTaskStatusIsNotAndAssignedEmployee(status, loggedInUser);
 
         return list.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
@@ -141,7 +148,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> listAllTaskByStatus(Status status) {
 
-        User loggedInUser = userRepo.findByUserName("john@employee.com");
+        // whoever user is logged in the system - SecurityContextHolder will bring the name
+        String usernameAuthenticated = SecurityContextHolder.getContext().getAuthentication().getName();
+
+//        User loggedInUser = userRepo.findByUserName("john@employee.com");
+        User loggedInUser = userRepo.findByUserName(usernameAuthenticated);
+
         List<Task> list = taskRepo.findAllByTaskStatusAndAssignedEmployee(status, loggedInUser);
 
         return list.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
