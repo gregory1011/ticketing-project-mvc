@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/user") //    /user  - endPoint
 public class UserController {
 
 
@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
 
-    @GetMapping("/create")
+    @GetMapping("/create") //      /user/create - endpoint
     public String createUser(Model model){
 
 
@@ -37,13 +37,13 @@ public class UserController {
     @PostMapping("/create") // this mapping helps to collect UI input userDTO and post it // use same endpoint as getMapping
     public String insertUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model){
 
-//         validation
-//        if (bindingResult.hasErrors()){
-//
-//            model.addAttribute("roles", roleService.listAllRoles());
-//            model.addAttribute("users", userService.listAllUsers());
-//            return "user/create";
-//        }
+        // validation
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("roles", roleService.listAllRoles());
+            model.addAttribute("users", userService.listAllUsers());
+            return "user/create";
+        }
 
         userService.save(userDTO); // save the user into DB
 
@@ -63,9 +63,17 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(@ModelAttribute("user") UserDTO user){
+    public String updateUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model){
 
-        userService.update(user);
+        // we use this if statement to capture the error with BindingResult
+        if (bindingResult.hasErrors()){ // if true read body code and return /user/update
+
+            model.addAttribute("roles", roleService.listAllRoles());
+            model.addAttribute("users", userService.listAllUsers());
+            return "/user/update";
+        }
+
+        userService.update(userDTO);
 
         return "redirect:/user/create";
     }

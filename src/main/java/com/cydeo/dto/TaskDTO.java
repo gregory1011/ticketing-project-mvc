@@ -5,19 +5,27 @@ import com.cydeo.enums.Status;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskDTO extends BaseEntity {
 
+    @NotNull
     private ProjectDTO project;
+    @NotNull
     private UserDTO assignedEmployee;
-    private String taskSubject, taskDetail;
+    @NotBlank
+    private String taskSubject;
+    @NotBlank
+    private String taskDetail;
+
+    private Status taskStatus;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate assignedDate;
-    private Status taskStatus;
 
 }

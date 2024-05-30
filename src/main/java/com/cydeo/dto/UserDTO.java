@@ -27,6 +27,7 @@ public class UserDTO {
     private String userName;
 
     @NotBlank
+    @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}")
     private String passWord;
 
     @NotNull
@@ -38,7 +39,7 @@ public class UserDTO {
     @Pattern(regexp = "^\\d{10}$")
     private String phone;
 
-    @NotNull
+    @NotNull  // it means notNull object
     private RoleDTO role;
 
     @NotNull
