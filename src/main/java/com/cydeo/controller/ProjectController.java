@@ -4,10 +4,13 @@ import com.cydeo.dto.ProjectDTO;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +27,7 @@ public class ProjectController {
     @GetMapping("/create")
     public String projectCreate(ProjectDTO projectDTO, Model model){
 
-        model.addAttribute("proJect", new ProjectDTO());
+        model.addAttribute("Project", new ProjectDTO());
         model.addAttribute("projectS", projectService.listAllProjectDetails());
         model.addAttribute("managers", userService.listAllUsersByRole("Manager"));
 
@@ -32,10 +35,17 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public String projectPost(ProjectDTO project){
+    public String projectPost(@Valid @ModelAttribute("Project") ProjectDTO Project, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("projectS", projectService.listAllProjectDetails());
+            model.addAttribute("managers", userService.listAllUsersByRole("Manager"));
+
+            return "/project/create";
+        }
 
         // save the info from the UI form
-        projectService.save(project);
+        projectService.save(Project);
 
         return "redirect:/project/create";
     }
@@ -67,7 +77,14 @@ public class ProjectController {
     }
 
     @PostMapping("/edit")
-    public String postProject(ProjectDTO project){
+    public String postProject(@Valid ProjectDTO project, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("projectS", projectService.listAllProjectDetails());
+            model.addAttribute("managers", userService.listAllUsersByRole("manager"));
+
+            return "/project/update";
+        }
 
         projectService.update(project);
 

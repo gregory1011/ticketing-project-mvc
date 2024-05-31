@@ -8,7 +8,10 @@ import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
@@ -33,9 +36,18 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String taskCreated(TaskDTO task){
+    public String taskCreated(@Valid @ModelAttribute("Task") TaskDTO Task, BindingResult bindingResult, Model model){
 
-        taskService.save(task);
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("projects", projectService.listAllProjects());
+            model.addAttribute("employees", userService.listAllUsersByRole("employee"));
+            model.addAttribute("taskS", taskService.listAllTaskDTO());
+
+            return "/task/create";
+        }
+
+        taskService.save(Task);
         return "redirect:/task/create";
     }
 
@@ -59,7 +71,15 @@ public class TaskController {
     }
 
     @PostMapping("/editTask/{id}")
-    public String updateTask(@PathVariable("id") Long id, TaskDTO task){
+    public String updateTask(@Valid @PathVariable("id") Long id, TaskDTO task, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("projects", projectService.listAllProjects());
+            model.addAttribute("employees", userService.listAllUsersByRole("employee"));
+            model.addAttribute("taskS", taskService.listAllTaskDTO());
+
+            return "/task/update";
+        }
 
         task.setId(id);
         taskService.update(task);
@@ -105,12 +125,18 @@ public class TaskController {
 //    }
 
     @PostMapping("/employee/update/{id}")
-    public String empUpdateTask(@PathVariable("id") Long id, TaskDTO task){
+    public String empUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model){
 
-       // task.setTaskId(id);
+        if (bindingResult.hasErrors()){
+            model.addAttribute("tasks", taskService.listAllTaskByStatusIsNot(Status.COMPLETE));
+            model.addAttribute("statuses", Status.values());
+
+            return "/task/status-update";
+        }
+
         taskService.updateStatus(task);
 
-        return "redirect:/task/employee/pendingTasks";
+        return "redirect:/task/employee/pending-tasks";
     }
 
 
