@@ -14,7 +14,7 @@ public class UserDTO {
 
     private Long id;
 
-    @NotBlank
+    @NotEmpty
     @Size(min = 2, max = 15)
     private String firstName;
 
