@@ -42,9 +42,9 @@
 
                                                     <!--  Validation  First Name-->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}">  <!-- if there is anyErrors -->
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li> <!-- display text error related with firstName from massages.properties-->
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -57,9 +57,9 @@
 
                                                     <!--  Validation  Last Name-->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -72,11 +72,11 @@
                                                     <label for="email_address" class="col-form-label">Email Address</label>
                                                     <input id="email_address" type="text" placeholder="email address" class="form-control" th:field="*{userName}">
 
-                                                    <!--  Validation  Email - Username-->
+                                                    <!--  Validation  Email - 'Username' -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('userName')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('userName')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -89,9 +89,9 @@
 
                                                     <!--  Validation Phone -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('phone')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -106,9 +106,9 @@
 
                                                     <!--  Validation Password -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('passWord')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('passWord')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -121,9 +121,9 @@
 
                                                     <!--  Validation Confirm Password -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -143,9 +143,9 @@
 
                                                     <!--  Validation Gender -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('gender')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
@@ -161,9 +161,9 @@
 
                                                     <!--  Validation Roles -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}">
-                                                        <ol class="alert alert-warning">
+                                                        <ul class="alert alert-warning">
                                                             <li th:each="err : ${#fields.errors('role')}" th:text="${err}"></li>
-                                                        </ol>
+                                                        </ul>
                                                     </div>
 
                                                 </div>
