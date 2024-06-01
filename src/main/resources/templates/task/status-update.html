@@ -36,11 +36,16 @@
                                                 <div class="form-group">
                                                     <label>Project</label>
                                                     <select th:field="*{project}" name="project" class="custom-select" readonly>>
-
-                                                        <option
-                                                                th:value="${task.project.projectCode}"
-                                                                th:text="${task.project.projectCode+' '+task.project.projectName}"></option>
+                                                        <option th:value="${task.project.projectCode}" th:text="${task.project.projectCode+' '+task.project.projectName}"></option>
                                                     </select>
+
+                                                    <!--  Validation project -->
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('project')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('project')}" th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -49,10 +54,16 @@
                                                 <div class="form-group">
                                                     <label>Assigned Employee</label>
                                                     <select th:field="*{assignedEmployee}" name="assigned_employee" class="custom-select" readonly>
-                                                        <option
-                                                                th:value="${task.assignedEmployee.userName}"
-                                                                th:text="${task.assignedEmployee.firstName+' '+task.assignedEmployee.lastName}"></option>
+                                                        <option th:value="${task.assignedEmployee.userName}" th:text="${task.assignedEmployee.firstName+' '+task.assignedEmployee.lastName}"></option>
                                                     </select>
+
+                                                    <!--  Validation assignedEmployee -->
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('assignedEmployee')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('assignedEmployee')}" th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -62,8 +73,15 @@
                                                     <div class="col-sm-12 col-md-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label for="task_subject">Task Subject</label>
-                                                            <input th:field="*{taskSubject}" id="task_subject" type="text" class="form-control"
-                                                                   aria-describedby="inputGroupPrepend" readonly/>
+                                                            <input th:field="*{taskSubject}" id="task_subject" type="text" class="form-control" aria-describedby="inputGroupPrepend" readonly/>
+
+                                                            <!--  Validation taskSubject -->
+                                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('taskSubject')}">
+                                                                <ul>
+                                                                    <li th:each="err : ${#fields.errors('taskSubject')}" th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -75,9 +93,15 @@
                                                     <div class="col-sm-12 col-md-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label>Task Detail</label>
-                                                            <textarea th:field="*{taskDetail}" id="task_detail" class="form-control" rows="3"
-                                                                      aria-describedby="inputGroupPrepend"
-                                                                      readonly></textarea>
+                                                            <textarea th:field="*{taskDetail}" id="task_detail" class="form-control" rows="3" aria-describedby="inputGroupPrepend" readonly></textarea>
+
+                                                            <!--  Validation taskDetail -->
+                                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('taskDetail')}">
+                                                                <ul>
+                                                                    <li th:each="err : ${#fields.errors('taskDetail')}" th:text="${err}"></li>
+                                                                </ul>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,6 +113,14 @@
                                                     <label>Status</label>
                                                     <select th:field="*{taskStatus}" name="taskStatus" class="custom-select">
                                                         <option th:each="eachStatus : ${statuses}" th:value="${eachStatus}" th:text="${eachStatus.value}"></option>
+
+                                                        <!--  Validation taskDetail -->
+                                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('taskStatus')}">
+                                                            <ul>
+                                                                <li th:each="err : ${#fields.errors('taskStatus')}" th:text="${err}"></li>
+                                                            </ul>
+                                                        </div>
+
                                                     </select>
                                                 </div>
                                             </div>
