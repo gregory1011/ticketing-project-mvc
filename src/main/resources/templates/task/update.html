@@ -42,6 +42,14 @@
 <!--                                                        <option th:value="''" th:text="Select"></option>-->
                                                         <option th:each="eachProject : ${projects}" th:value="${eachProject.projectCode}" th:text="${eachProject.projectCode+' '+eachProject.projectName}"></option>
                                                     </select>
+
+                                                    <!--  Validation project -->
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('project')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('project')}" th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -54,6 +62,14 @@
 <!--                                                        <option th:value="''" th:text="Select"></option>-->
                                                         <option th:each="eachEmployee : ${employees}" th:text="${eachEmployee.firstName+' '+eachEmployee.lastName}" th:value="${eachEmployee.userName}"></option>
                                                     </select>
+
+                                                    <!--  Validation assignedEmployee -->
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('assignedEmployee')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('assignedEmployee')}" th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -63,6 +79,14 @@
                                                 <div class="form-group">
                                                     <label for="task_subject" class="col-form-label">Task Subject</label>
                                                     <input th:field="*{taskSubject}" id="task_subject" type="text" class="form-control" placeholder="task subject">
+
+                                                    <!--  Validation taskSubject -->
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('taskSubject')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('taskSubject')}" th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -72,6 +96,14 @@
                                                 <div class="form-group">
                                                     <label for="task_detail">Task Detail</label>
                                                     <textarea id="task_detail" class="form-control" placeholder="task detail" th:field="*{taskDetail}"></textarea>
+
+                                                    <!--  Validation taskDetail -->
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('taskDetail')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('taskDetail')}" th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
