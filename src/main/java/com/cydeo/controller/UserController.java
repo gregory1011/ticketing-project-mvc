@@ -7,11 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -44,11 +42,11 @@ public class UserController {
 
             model.addAttribute("roles", roleService.listAllRoles());
             model.addAttribute("users", userService.listAllUsers());
-            List<FieldError> err = bindingResult.getFieldErrors();
-
-            for (FieldError e : err){
-                System.out.println("Error on object ----->" + e.getObjectName()+ " on field ----->"+e.getField()+". Message --->"+e.getDefaultMessage());
-            }
+//            List<FieldError> err = bindingResult.getFieldErrors();
+//
+//            for (FieldError e : err){
+//                System.out.println("Error on object ----->" + e.getObjectName()+ " on field ----->"+e.getField()+". Message --->"+e.getDefaultMessage());
+//            }
             return "user/create";
         }
 

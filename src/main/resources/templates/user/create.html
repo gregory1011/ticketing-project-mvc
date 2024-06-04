@@ -42,7 +42,7 @@
 
                                                     <!--  Validation  First Name-->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}">  <!-- if there is anyErrors -->
-                                                        <ul class="alert alert-warning">
+                                                        <ul >
                                                             <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li> <!-- display text error related with firstName from massages.properties-->
                                                         </ul>
                                                     </div>
@@ -57,7 +57,7 @@
 
                                                     <!--  Validation  Last Name-->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>
@@ -74,7 +74,7 @@
 
                                                     <!--  Validation  Email - 'Username' -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('userName')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('userName')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>
@@ -89,7 +89,7 @@
 
                                                     <!--  Validation Phone -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('phone')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>
@@ -106,7 +106,7 @@
 
                                                     <!--  Validation Password -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('passWord')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('passWord')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>
@@ -121,7 +121,7 @@
 
                                                     <!--  Validation Confirm Password -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>
@@ -143,7 +143,7 @@
 
                                                     <!--  Validation Gender -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('gender')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>
@@ -161,7 +161,7 @@
 
                                                     <!--  Validation Roles -->
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}">
-                                                        <ul class="alert alert-warning">
+                                                        <ul>
                                                             <li th:each="err : ${#fields.errors('role')}" th:text="${err}"></li>
                                                         </ul>
                                                     </div>

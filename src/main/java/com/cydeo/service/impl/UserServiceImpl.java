@@ -10,7 +10,6 @@ import com.cydeo.repository.UserRepo;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -100,8 +99,8 @@ public class UserServiceImpl implements UserService {
 
             // set isDeleted=true
             user.setIsDeleted(true);
-
-            user.setUserName(user.getUserName()+"-"+user.getId());
+            String letter = user.getFirstName().substring(0, 1).toLowerCase();
+            user.setUserName(letter+"."+user.getUserName());
             // save updatedUser in DB
             userRepo.save(user);
         }
