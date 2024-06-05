@@ -4,7 +4,6 @@ import com.cydeo.dto.ProjectDTO;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/project")
@@ -25,9 +23,9 @@ public class ProjectController {
 
 
     @GetMapping("/create")
-    public String projectCreate(ProjectDTO projectDTO, Model model){
+    public String projectCreate(Model model){
 
-        model.addAttribute("Project", new ProjectDTO());
+        model.addAttribute("projectDTO", new ProjectDTO());
         model.addAttribute("projectS", projectService.listAllProjectDetails());
         model.addAttribute("managers", userService.listAllUsersByRole("Manager"));
 
@@ -35,7 +33,7 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public String projectPost(@Valid @ModelAttribute("Project") ProjectDTO Project, BindingResult bindingResult, Model model){
+    public String projectPost(@Valid @ModelAttribute("projectDTO") ProjectDTO projectDTO, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
             model.addAttribute("projectS", projectService.listAllProjectDetails());
@@ -45,7 +43,7 @@ public class ProjectController {
         }
 
         // save the info from the UI form
-        projectService.save(Project);
+        projectService.save(projectDTO);
 
         return "redirect:/project/create";
     }
@@ -69,7 +67,7 @@ public class ProjectController {
     @GetMapping("/edit/{projectCode}")
     public String editProject(@PathVariable("projectCode") String projectCode, Model model){
 
-        model.addAttribute("proJect", projectService.findByProjectCode(projectCode));
+        model.addAttribute("projectDTO", projectService.findByProjectCode(projectCode));
         model.addAttribute("projectS", projectService.listAllProjectDetails());
         model.addAttribute("managers", userService.listAllUsersByRole("manager"));
 
@@ -77,7 +75,7 @@ public class ProjectController {
     }
 
     @PostMapping("/edit")
-    public String postProject(@Valid ProjectDTO project, BindingResult bindingResult, Model model){
+    public String postProject(@Valid @ModelAttribute("projectDTO") ProjectDTO projectDTO, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
             model.addAttribute("projectS", projectService.listAllProjectDetails());
@@ -86,7 +84,7 @@ public class ProjectController {
             return "/project/update";
         }
 
-        projectService.update(project);
+        projectService.update(projectDTO);
 
         return "redirect:/project/create";
     }
