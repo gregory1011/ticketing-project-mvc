@@ -11,7 +11,7 @@
             <img class="logo-img" th:src="@{/images/CydeoLogo_01.png}" height="45" alt="logo">
         </div>
         <div class="card-body">
-            <form th:action="@{/login}" method="post" >
+            <form th:action="@{/login}" method="post" th:object="${loginDTO}" >
                 <div class="form-group">
                     <label for="username">Email</label>:
                     <input type="text" id="username" name="username" class="form-control" placeholder="username"/>
@@ -22,12 +22,10 @@
                 </div>
                 <div class="form-group">
                     <label class="custom-control custom-checkbox">
-                        <input class="custom-control-input" name="remember-me" type="checkbox"><span
-                            class="custom-control-label">Remember Me</span>
+                        <input class="custom-control-input" name="remember-me" type="checkbox"><span class="custom-control-label">Remember Me</span>
                     </label>
                 </div>
-                <input type="submit" name="login-submit" id="login-submit"
-                       class="form-control btn btn-primary btn-lg btn-block" value="Log In"/>
+                <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary btn-lg btn-block" value="Log In"/>
             </form>
         </div>
     </div>
