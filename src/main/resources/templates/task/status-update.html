@@ -30,13 +30,13 @@
                                 </header>
                                 <div class="panel-body">
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:action="@{/task/employee/update/{id}(id=${task.id})}" th:object="${task}" method="post">
+                                    <form th:action="@{/task/employee/update/{id}(id=${taskDTO.id})}" th:object="${taskDTO}" method="post">
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Project</label>
                                                     <select th:field="*{project}" name="project" class="custom-select" readonly>>
-                                                        <option th:value="${task.project.projectCode}" th:text="${task.project.projectCode+' '+task.project.projectName}"></option>
+                                                        <option th:value="${taskDTO.project.projectCode}" th:text="${taskDTO.project.projectCode+' '+taskDTO.project.projectName}"></option>
                                                     </select>
 
                                                     <!--  Validation project -->
@@ -54,7 +54,7 @@
                                                 <div class="form-group">
                                                     <label>Assigned Employee</label>
                                                     <select th:field="*{assignedEmployee}" name="assigned_employee" class="custom-select" readonly>
-                                                        <option th:value="${task.assignedEmployee.userName}" th:text="${task.assignedEmployee.firstName+' '+task.assignedEmployee.lastName}"></option>
+                                                        <option th:value="${taskDTO.assignedEmployee.userName}" th:text="${taskDTO.assignedEmployee.firstName+' '+taskDTO.assignedEmployee.lastName}"></option>
                                                     </select>
 
                                                     <!--  Validation assignedEmployee -->
@@ -169,7 +169,7 @@
                                                 <td th:text="${#temporals.format(eachTask.assignedDate, 'MM-dd-yyyy')}"></td>
                                                 <td th:text="${eachTask.taskStatus.value}"></td>
                                                 <td>
-                                                    <a th:href="@{/task/employee/pendingTasks/{id}(id=${eachTask.id})}" class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:href="@{/task/employee/edit/{id}(id=${eachTask.id})}" class="btn btn-warning rounded-0">Update</a>
                                                 </td>
                                             </tr>
                                             </tbody>
