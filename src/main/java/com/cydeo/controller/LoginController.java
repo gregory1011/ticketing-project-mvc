@@ -9,7 +9,6 @@ public class LoginController {
     //localhost:8080/ or localhost:8080/login
     @RequestMapping(value = {"/login","/"})  /// these 2 endpoints show same page, login page
     public String login(){
-
         return "login";
     }
 

@@ -32,7 +32,7 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:action="@{/task/create}" method="post" th:object="${Task}">
+                                    <form th:action="@{/task/create}" method="post" th:object="${taskDTO}">
 
                                         <div class="row">
                                             <div class="col">
@@ -42,14 +42,6 @@
 <!--                                                        <option th:value="''" th:text="Select Project"></option>-->
                                                         <option th:each="eachProject : ${projects}" th:value="${eachProject.projectCode}" th:text="${eachProject.projectName}"></option>
                                                     </select>
-
-                                                    <!--  Validation project -->
-                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('project')}">
-                                                        <ul>
-                                                            <li th:each="err : ${#fields.errors('project')}" th:text="${err}"></li>
-                                                        </ul>
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -62,14 +54,6 @@
 <!--                                                        <option th:value="''" th:text="Select"></option>-->
                                                         <option th:each="eachEmployee : ${employees}" th:text="${eachEmployee.firstName+' '+eachEmployee.lastName}" th:value="${eachEmployee.userName}"></option>
                                                     </select>
-
-                                                    <!--  Validation assignedEmployee -->
-                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('assignedEmployee')}">
-                                                        <ul>
-                                                            <li th:each="err : ${#fields.errors('assignedEmployee')}" th:text="${err}"></li>
-                                                        </ul>
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
