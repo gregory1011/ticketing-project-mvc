@@ -10,6 +10,7 @@ import java.util.List;
 public interface ProjectRepo extends JpaRepository<Project, Long> {
 
     Project findByProjectCode(String sourceID);
+    Project getProjectsByProjectCode(String projectCode);
     List<Project> findAllByAssignedManager(User manager);
 
     @Transactional
